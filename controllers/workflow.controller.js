@@ -57,6 +57,7 @@ const sleepUntilReminder = async (context, label, date) => {
     await context.sleepUntil(label, date.toDate());
 };
 
+// eslint-disable-next-line no-unused-vars
 const triggerReminder = async (context, label, subscription) => {
     return await context.run(label, async () => {
         console.log(`Triggering ${label} reminder`);
