@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/wirlhawk/nodejs-subscription-tracker
+    container_name: nodejs-subscription-tracker
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    environment:
+      - NODE_ENV=production
+      - DB_URI=mongodb://mongodb:27017/subscriptionDB
+    ports:
+      - '5500:5500'
+    volumes:
+      - ./data:/app/data
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=subscriptionDB
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    command: ["mongod", "--auth"]
+
+volumes:
+  mongodb_data:
